@@ -60,3 +60,21 @@ def agente_buscador(tema):
 
 # Testando o Agente
 print(agente_buscador('Copa do Mundo de Futebol')) 
+
+
+def chamar_ollama(prompt):
+    resposta = requests.post(
+            OLLAMA_URL,
+            json={
+                'model' : MODEL,
+                'prompt' : prompt,
+                'stream' : false
+            },
+            timeout=120
+    )
+
+    reposta.raise_for_status()
+
+    dados = resposta.json()
+
+    return dados['response']
