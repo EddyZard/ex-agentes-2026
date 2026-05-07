@@ -18,4 +18,14 @@ def agente_buscador(tema):
         'srlimit' : 5        # O limite de tópicos na busca
     }
 
-    
+    headers = {
+        'User-Agent' : 'AgenteAula/1.0 (269565@unifio.edu.br)'  # Identificação para "credencial" de entrada
+    }
+
+# Padrão para consultar uma API:
+    resposta = requests.get( 
+        url,
+        params= parametros,
+        headers = headers,
+        timeout=10           # Tempo que espera a resposta, se não for estabelecido, ele apenas usa o Timeout Padrão (ele espera "pra sempre", por volta de 1 ou 2 minutos [porém é o python que irá encerrar a request e não a biblioteca em si])
+    )
