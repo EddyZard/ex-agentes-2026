@@ -29,3 +29,34 @@ def agente_buscador(tema):
         headers = headers,
         timeout=10           # Tempo que espera a resposta, se não for estabelecido, ele apenas usa o Timeout Padrão (ele espera "pra sempre", por volta de 1 ou 2 minutos [porém é o python que irá encerrar a request e não a biblioteca em si])
     )
+
+    resposta.raise_for_status()   # Se for um código de resposta normal (20X), caso contrário ele para a aplicação
+
+        # Tratamento de dados
+    dados = resposta.json()
+
+    resultados = []
+
+    for item in dados['query']['search']:
+        trecho = item['snippet']
+
+        trecho = trecho.replace(
+            '<span class="searchmatch">',
+            ""
+        )
+
+        trecho = trecho.replace(
+            "</span>",
+            ""
+        )
+
+        resultados.append({
+            'titulo' : item['title'],
+            'trecho' : trecho,
+            'link' : f"https://pt.wikipedia.org.wiki/{item['title'].replace(' ', '_')}"
+        })
+
+    return resultados
+
+# Testando o Agente
+print(agente_buscador('Copa do Mundo de Futebol')) 
