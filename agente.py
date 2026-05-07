@@ -59,22 +59,32 @@ def agente_buscador(tema):
     return resultados
 
 # Testando o Agente
-print(agente_buscador('Copa do Mundo de Futebol')) 
+# print(agente_buscador('Copa do Mundo de Futebol')) 
 
 
 def chamar_ollama(prompt):
     resposta = requests.post(
-            OLLAMA_URL,
-            json={
-                'model' : MODEL,
-                'prompt' : prompt,
-                'stream' : false
-            },
-            timeout=120
+        OLLAMA_URL,
+        json={
+            'model' : MODEL,
+            'prompt' : prompt,
+            'stream' : False
+        },
+        timeout=120
     )
 
-    reposta.raise_for_status()
+    resposta.raise_for_status()
 
     dados = resposta.json()
 
     return dados['response']
+
+
+teste = """
+Aja como um especialista me Ciência da Computação
+
+Tarefa:
+Defina vetores em estruturas de dados
+"""
+
+print(chamar_ollama(teste))
